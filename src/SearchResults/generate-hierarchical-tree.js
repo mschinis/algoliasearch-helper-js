@@ -89,7 +89,13 @@ function generateHierarchicalTree(sortBy, hierarchicalSeparator, hierarchicalRoo
 function filterFacetValues(parentPath, currentRefinement, hierarchicalSeparator, hierarchicalRootPath,
                            hierarchicalShowParentLevel) {
   return function(facetCount, facetValue) {
-    // we want the facetValue is a child of hierarchicalRootPath
+    // Check if facetValue is does not have an indexOf property and the facetCount is not undefined
+    // to make sure the root levels check doesn't break
+    if(facetCount === undefined || !facetValue.indexOf) {
+        return false;
+    }
+
+      // we want the facetValue is a child of hierarchicalRootPath
     if (hierarchicalRootPath &&
       (facetValue.indexOf(hierarchicalRootPath) !== 0 || hierarchicalRootPath === facetValue)) {
       return false;
